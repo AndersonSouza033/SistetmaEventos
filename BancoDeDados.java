@@ -1,4 +1,3 @@
-
 // Importando bibliotecas para fazer listas!
 import java.util.List;
 import java.util.ArrayList;
