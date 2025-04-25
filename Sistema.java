@@ -1,6 +1,6 @@
-package SistemaEventos;
-
 // Importando bibliotecas necessárias!
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Sistema {
@@ -64,10 +64,18 @@ public class Sistema {
         System.out.println("Senha do participante: ");
         String senha =  scanner.nextLine();
 
+        // Lista que armazenará os eventos escolhidos
+        List<Evento> eventoEscolhido = new ArrayList<>();
+
         System.out.println("Deseja cadastrar o participante em algum evento? (S/N)");
         String resposta = scanner.nextLine();
 
         while (resposta.equalsIgnoreCase("s")){
+            if (BancoDeDados.getEventos().isEmpty()) {
+                System.out.println("Não há eventos disponíveis!");
+                break;
+            }
+
             System.out.println("\n Eventos disponíveis: ");
             for(int i = 0; i < BancoDeDados.getEventos().size(); i++){
                 System.out.println(( i + 1 ) + " . " + BancoDeDados.getEventos().get(i).getNomeEvento());
@@ -80,9 +88,23 @@ public class Sistema {
             if (escolhaEvento < 1 || escolhaEvento > BancoDeDados.getEventos().size()){
                 System.out.println("Evento inválido!");
             }
-            else{
-                
+            else {
+                Evento selecionado = BancoDeDados.getEventos().get(escolhaEvento - 1);
+                if(eventoEscolhido.contains(selecionado)){
+                    System.out.println("Você já está inscrito nesse evento!");
+                }
+                else{
+                    eventoEscolhido.add(selecionado);
+                    System.out.println("Inscrição no evento realizada com sucesso!");
+                }
             }
+            System.out.println("Deseja se inscrever em outro evento? (S/N)");
+            resposta = scanner.nextLine();
         }
+    
+    // Criando cantor e adicionando na lista centralizada do BancoDeDados!
+    Participante participante = new Participante(nome, email, telefone, idade, senha, eventoEscolhido);
+    BancoDeDados.getParticipantes().add(participante);
+    System.out.println("Participante cadastrado com sucesso!");
     }
 }
