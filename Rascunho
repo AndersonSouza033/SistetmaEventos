@@ -1,0 +1,211 @@
+// Importando bibliotecas necessárias!
+import java.util.Scanner;
+
+public class Sistema{
+    // Criando o Scanner para ler os dados!
+    private static final Scanner scanner = new Scanner(System.in);
+
+    // Iniciando o sistema com o menu principal!
+    public static void main(String[] args){
+        System.out.println("\n--- Bem-vindo ao Rolézinho Eventos ---");
+        System.out.println("1. Entrar como organizador");
+        System.out.println("2. Entrar como participante");
+        System.out.println("3. Cadastrar participante");
+        System.out.println("4. Sair")
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer!
+
+        switch(opcao){
+            case 1: menuOrganizador(); break; // Método criado! Linha 27
+            case 2: menuParticipante(); break; // Método criado! linha 46
+            case 3: criarParticipante(); break; // Método criado! linha 67
+            case 4: System.exit(0);
+            default: System.out.println("Opção inválida!");
+        }
+    }
+    
+    // Criando o menu do organizador!
+    public static void menuOrganizador(){
+        System.out.println("\n--- Menu organizador! ---");
+        System.out.println("1. Dados dos eventos");
+        System.out.println("2. Dados dos participante");
+        System.out.println("3. Dados dos cantores");
+        System.out.println("4. Voltar")
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer!
+
+        switch(opcao){
+            case 1: menuEvento(); break; // Método criado! Linha 129
+            case 2: menuParticipanteOrg(); break; // Método criado! Linha 158
+            case 3: menuCantor(); break; // Método criado! Linha 181
+            case 4: return;
+            default: System.out.println("Opção inválida!");
+        }
+    }
+    
+    // Criando o menu do participante!
+    public static void menuParticipante(){
+        System.out.println("\n--- Menu do participante! ---");
+        System.out.println("1. Alterar meus dados");
+        System.out.println("2. Listar eventos");
+        System.out.println("3. Inscrever no evento");
+        System.out.println("4. Cancelar inscrição");
+        System.out.println("5. Voltar")
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer!
+
+        switch(opcao){
+            case 1: alterarDados(); break;
+            case 2: listarEvento(); break;
+            case 3: inscricaoEvento(); break;
+            case 4: cancelarInscricao(); break;
+            case 5: return;
+            default: System.out.println("Opção inválida!");
+        }
+    }
+    
+    // Método para cadastrar participante! (Precisa de leve ajuste a partir da linha 123)
+    public void criarParticipante(){
+        System.out.println("Nome do participante: ");
+        String nome = scanner.nextLine();
+
+        System.out.println("E-mail do participante: ");
+        String email = scanner.nextLine();
+
+        System.out.println("Telefone do participante: ");
+        String telefone = scanner.nextLine();
+
+        System.out.println("Idade do participante: ");
+        int idade = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer
+
+        System.out.println("Senha do participante: ");
+        String senha =  scanner.nextLine();
+
+        // Lista que armazenará os eventos escolhidos
+        List<Evento> eventoEscolhido = new ArrayList<>();
+
+        System.out.println("Deseja cadastrar o participante em algum evento? (S/N)");
+        String resposta = scanner.nextLine();
+
+        while (resposta.equalsIgnoreCase("s")){
+            if (BancoDeDados.getEventos().isEmpty()) {
+                System.out.println("Não há eventos disponíveis!");
+                break;
+            }
+
+            System.out.println("\n Eventos disponíveis: ");
+            for(int i = 0; i < BancoDeDados.getEventos().size(); i++){
+                System.out.println(( i + 1 ) + " . " + BancoDeDados.getEventos().get(i).getNomeEvento());
+            }
+            
+            System.out.println("Digite o número do evento para inscrever");
+            int escolhaEvento = scanner.nextInt();
+            scanner.nextLine(); // Limpar Buffer
+
+            if (escolhaEvento < 1 || escolhaEvento > BancoDeDados.getEventos().size()){
+                System.out.println("Evento inválido!");
+            }
+            else {
+                Evento selecionado = BancoDeDados.getEventos().get(escolhaEvento - 1);
+                if(eventoEscolhido.contains(selecionado)){
+                    System.out.println("Você já está inscrito nesse evento!");
+                }
+                else{
+                    eventoEscolhido.add(selecionado);
+                    System.out.println("Inscrição no evento realizada com sucesso!");
+                }
+            }
+            System.out.println("Deseja se inscrever em outro evento? (S/N)");
+            resposta = scanner.nextLine();
+        }
+    
+    // Criando cantor e adicionando na lista centralizada do BancoDeDados!
+    Participante participante = new Participante(nome, email, telefone, idade, senha, eventoEscolhido);
+    BancoDeDados.getParticipantes().add(participante);
+    System.out.println("Participante cadastrado com sucesso!");
+    }
+    
+    // Criando o menu do evento (organizador)!
+    public static void menuEvento(){
+        System.out.println("\n--- Menu evento! ---");
+        System.out.println("1. Criar evento");
+        System.out.println("2. Listar eventos");
+        System.out.println("3. Editar eventos");
+        System.out.println("4. Cancelar eventos");
+        System.out.println("5. Adicionar cantor no evento");
+        System.out.println("6. Adicionar participante no evento");
+        System.out.println("7. Remover cantor no evento");
+        System.out.println("8. Excluir evento");
+        System.out.println("9. Voltar")
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer!
+
+        switch(opcao){
+            case 1: criarEvento(); break;
+            case 2: listarEvento(); break;
+            case 3: editarEvento(); break;
+            case 4: cancelarEvento(); break;
+            case 5: adicionarCantor(); break;
+            case 6: adicionarParticipante(); break;
+            case 7: removerCantor(); break;
+            case 8: excluirEvento(); break;
+            case 9: return;
+            default: System.out.println("Opção inválida!");
+        }
+    }
+
+    // Criando o menu do participante (Organizador)!
+    public static void menuParticipanteOrg(){
+        System.out.println("\n--- Menu do participante (organizador)! ---");
+        System.out.println("1. Cadastrar participante");
+        System.out.println("2. Listar participantes");
+        System.out.println("3. Editar participantes");
+        System.out.println("4. Adicionar participantes no evento");
+        System.out.println("5. Excluir participantes");
+        System.out.println("6. Voltar")
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer!
+
+        switch(opcao){
+            case 1: criarParticipante(); break; // Método criado! Linha 67
+            case 2: listarParticipante(); break;
+            case 3: editarParticipante(); break;
+            case 4: adicionarParticipanteEvento(); break;
+            case 5: excluirParticpante(); break;
+            case 6: return;
+            default: System.out.println("Opção inválida!");
+        }
+    }
+    
+    // Criando o menu do cantor (organizador)!
+    public static void menuCantor(){
+        System.out.println("\n--- Menu do cantor! ---");
+        System.out.println("1. Cadastrar cantor");
+        System.out.println("2. Listar cantores");
+        System.out.println("3. Editar cantores");
+        System.out.println("4. Adicionar cantores no evento");
+        System.out.println("5. Excluir cantores");
+        System.out.println("6. Voltar")
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer!
+
+        switch(opcao){
+            case 1: criarCantor(); break;
+            case 2: listarCantor(); break;
+            case 3: editarCantor(); break;
+            case 4: adicionarCantorEvento(); break;
+            case 5: excluirCantor(); break;
+            case 6: return;
+            default: System.out.println("Opção inválida!");
+        }
+    }
+    
+    public static void listarEvento(){
+        System.out.println("\n ----- Lista de eventos: -----");
+        for(int i = 0; i < BancoDeDados.getEventos().size; i++){
+            BancoDeDados.getEventos().toString()
+        }
+    }
+    
+}

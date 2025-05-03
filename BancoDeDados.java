@@ -1,12 +1,17 @@
 // Importando bibliotecas para fazer listas!
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BancoDeDados {
     // Criando as tabelas das classes para armazenar os dados!
     private static List<Evento> eventos = new ArrayList<>();
     private static List<Cantor> cantores = new ArrayList<>();
     private static List<Participante> participantes = new ArrayList<>();
+
+    // Criando método para adiciona o cantor na tabela!
+    public static void adicionarCantor(Cantor cantor){
+        
+    }
 
     // Adicionando um evento teste para a tabela!
     static{

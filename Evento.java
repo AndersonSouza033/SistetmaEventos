@@ -86,10 +86,10 @@ public class Evento {
         return "Eventos: " +
             "\n Nome: " + nomeEvento +
             "\n Descrição: " + descricaoEvento +
-            "\n Local: " + localEvento + 
+            "\n Local: " + localEvento +
             "\n Data: " + dataEvento +
-            "\n Capacidade: " + capacidadeEvento + "pessoas" + 
-            "\n Cantores: " + cantoresEscolhidos + 
+            "\n Capacidade: " + capacidadeEvento + " pessoas" +
+            "\n Cantores: " + cantoresEscolhidos +
             "\n -------------------";
     }
 }
