@@ -12,14 +12,12 @@ public class Evento {
     private List<Participante> participantesCadastrados;
 
     // Criando o método construtor!
-    public Evento(String nomeEvento, String descricaoEvento, String localEvento, String dataEvento, int capacidadeEvento, List<Cantor> cantoresEscolhidos, List<Participante> participantesCadastrados) {
+    public Evento(String nomeEvento, String descricaoEvento, String localEvento, String dataEvento, int capacidadeEvento) {
         this.nomeEvento = nomeEvento;
         this.descricaoEvento = descricaoEvento;
         this.localEvento = localEvento;
         this.dataEvento = dataEvento;
         this.capacidadeEvento = capacidadeEvento;
-        this.cantoresEscolhidos = cantoresEscolhidos;
-        this.participantesCadastrados = participantesCadastrados;
     }
 
     // Criando os métodos getters (Ler)!
@@ -82,15 +80,17 @@ public class Evento {
     
     // Criando o método para listar!
     @Override
-    public String toString(){
-        return "Eventos: " +
-            "\n Nome: " + nomeEvento +
-            "\n Descrição: " + descricaoEvento +
-            "\n Local: " + localEvento +
-            "\n Data: " + dataEvento +
-            "\n Capacidade: " + capacidadeEvento + " pessoas" +
-            "\n Cantores: " + cantoresEscolhidos +
-            "\n -------------------";
+    public String toString() {
+        return """
+            Eventos:
+            Nome: %s
+            Descrição: %s
+            Local: %s
+            Data: %s
+            Capacidade: %d pessoas
+            Cantores: %s
+            -------------------
+            """.formatted(nomeEvento, descricaoEvento, localEvento, dataEvento, capacidadeEvento, cantoresEscolhidos);
     }
 }
 

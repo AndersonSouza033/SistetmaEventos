@@ -1,4 +1,4 @@
-// Importando bibliotecas necessárias!
+    // Importando bibliotecas necessárias!
 import java.util.List;
 
 public class Participante {
@@ -11,13 +11,12 @@ public class Participante {
     private List<Evento> eventoEscolhido;
     
     // Criando o método construtor!
-    public Participante(String nomeParticipante, String emailParticipante, String telefoneParticipante,int idadeParticipante, String senhaPartcipante, List<Evento> eventoEscolhido){
+    public Participante(String nomeParticipante, String emailParticipante, String telefoneParticipante,int idadeParticipante, String senhaPartcipante){
         this.nomeParticipante = nomeParticipante;
         this.emailParticipante = emailParticipante;
         this.telefoneParticipante = telefoneParticipante;
         this.idadeParticipante = idadeParticipante;
         this.senhaPartcipante = senhaPartcipante;
-        this.eventoEscolhido = eventoEscolhido;
     }
 
     // Criando os métodos getters (Ler)!
@@ -37,7 +36,7 @@ public class Participante {
         return idadeParticipante;
     }
 
-    public String getSenhaPartcipante() {
+    public String getSenhaParticipante() {
         return senhaPartcipante;
     }
 
@@ -73,12 +72,14 @@ public class Participante {
     // Criando o método para listar!
     @Override
     public String toString() {
-        return "\n Participantes:" +
-            "\n Nome: " + nomeParticipante +
-            "\n E-mail: " + emailParticipante + 
-            "\n Telefone: " + telefoneParticipante + 
-            "\n Idade: " + idadeParticipante +
-            "\n Eventos inscrito: " + eventoEscolhido +
-            "\n -------------------";
+        return """
+            Participantes:
+            Nome: %s
+            E-mail: %s
+            Telefone: %s
+            Idade: %d
+            Eventos inscritos: %s
+            -------------------
+            """.formatted(nomeParticipante, emailParticipante, telefoneParticipante, idadeParticipante, eventoEscolhido);
     }
 }
