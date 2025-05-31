@@ -69,6 +69,10 @@ public class BancoDeDados {
         cantores.add(new Cantor("MC Cabelinho", "mccabelinho@gmail.com", "(21) 9 9999-9999", 22));
     }
 
+    static{
+        cantores.add(new Cantor("MC Oruam","mcoruam@gmail.com", "(21) 9 9999-9999", 25));
+    }
+
     // Adicionando um participante teste para a tabela!
     static{
         participantes.add(new Participante("Anderson Souza", "andersonsouzapcb@gmail.com", "(27) 9 9999-9999", 21, "1234"));

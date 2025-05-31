@@ -7,7 +7,7 @@ public class Participante {
     private String emailParticipante;
     private String telefoneParticipante;
     private int idadeParticipante;
-    private String senhaPartcipante;
+    private String senhaParticipante;
     private List<Evento> eventoEscolhido;
     
     // Criando o método construtor!
@@ -16,7 +16,7 @@ public class Participante {
         this.emailParticipante = emailParticipante;
         this.telefoneParticipante = telefoneParticipante;
         this.idadeParticipante = idadeParticipante;
-        this.senhaPartcipante = senhaPartcipante;
+        this.senhaParticipante = senhaPartcipante;
     }
 
     // Criando os métodos getters (Ler)!
@@ -37,7 +37,7 @@ public class Participante {
     }
 
     public String getSenhaParticipante() {
-        return senhaPartcipante;
+        return senhaParticipante;
     }
 
     public List<Evento> getEventoEscolhido(){
@@ -61,8 +61,8 @@ public class Participante {
         this.idadeParticipante = idadeParticipante;
     }
 
-    public void setSenhaPartcipante(String senhaPartcipante) {
-        this.senhaPartcipante = senhaPartcipante;
+    public void setSenhaParticipante(String senhaParticipante) {
+        this.senhaParticipante = senhaParticipante;
     }
 
     public void setEventoEscolhido(List<Evento> eventoEscolhido){
@@ -82,4 +82,5 @@ public class Participante {
             -------------------
             """.formatted(nomeParticipante, emailParticipante, telefoneParticipante, idadeParticipante, eventoEscolhido);
     }
+
 }

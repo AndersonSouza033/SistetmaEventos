@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Evento {
     // Definindo atributos da classe evento!
+    private boolean ativoEvento;
     private String nomeEvento;
     private String descricaoEvento;
     private String localEvento;
@@ -13,6 +14,7 @@ public class Evento {
 
     // Criando o método construtor!
     public Evento(String nomeEvento, String descricaoEvento, String localEvento, String dataEvento, int capacidadeEvento) {
+        this.ativoEvento = true;
         this.nomeEvento = nomeEvento;
         this.descricaoEvento = descricaoEvento;
         this.localEvento = localEvento;
@@ -21,6 +23,10 @@ public class Evento {
     }
 
     // Criando os métodos getters (Ler)!
+    public boolean getAtivoEvento(){
+        return ativoEvento;
+    }
+
     public String getNomeEvento() {
         return nomeEvento;
     }
@@ -50,6 +56,10 @@ public class Evento {
     }
 
     //Criando os métodos setters (Adicionar)!
+    public void isAtivoEvento(boolean ativoEvento){
+        this.ativoEvento = ativoEvento;
+    }
+
     public void setNomeEvento(String nomeEvento) {
         this.nomeEvento = nomeEvento;
     }
@@ -89,8 +99,14 @@ public class Evento {
             Data: %s
             Capacidade: %d pessoas
             Cantores: %s
+            Ativo: %s
             -------------------
-            """.formatted(nomeEvento, descricaoEvento, localEvento, dataEvento, capacidadeEvento, cantoresEscolhidos);
+            """.formatted(nomeEvento, descricaoEvento, localEvento, dataEvento, capacidadeEvento, cantoresEscolhidos, ativoEvento);
+    }
+
+    public void desativarEvento() {
+        this.ativoEvento = false;
+        System.out.println("Evento cancelado!");
     }
 }
 

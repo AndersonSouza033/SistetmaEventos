@@ -1,3 +1,4 @@
+
 // Importando bibliotecas necessárias!
 import java.util.Scanner;
 
@@ -6,7 +7,7 @@ public class Sistema {
     private static final Scanner scanner = new Scanner(System.in);
 
     // Iniciando o sistema com o menu principal!
-    public static void main(String[] args){
+    public static void main(String[] args) {
         while (true) {
             System.out.println("\n--- Bem-vindo ao Rolézinho Eventos ---");
             System.out.println("1. Entrar como organizador");
@@ -16,29 +17,37 @@ public class Sistema {
             System.out.print("Opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine(); // Limpar buffer
-    
+
             switch (opcao) {
-                case 1: loginOrganizador(); break; // Linha 31.
-                case 2: loginParticipante(); break; // Linha 52.
-                case 3: criarParticipante(); break; // Linha 239.
-                case 4: System.out.println("Encerrando o sistema. Até a próxima!");
-                System.exit(0);
-                default: System.out.println("Opção inválida!");
+                case 1:
+                    loginOrganizador();
+                    break; // Linha 31.
+                case 2:
+                    loginParticipante();
+                    break; // Linha 61.
+                case 3:
+                    criarParticipante();
+                    break; // Linha 239.
+                case 4:
+                    System.out.println("Encerrando o sistema. Até a próxima!");
+                    System.exit(0);
+                default:
+                    System.out.println("Opção inválida!");
             }
         }
     }
 
     // Verificando login do organizador!
-    public static void loginOrganizador(){
+    public static void loginOrganizador() {
         boolean loginValido = false;
 
         while (!loginValido) {
             System.out.println("Login: ");
             String loginInput = scanner.nextLine();
-    
+
             System.out.println("Senha: ");
             String senhaInput = scanner.nextLine();
-    
+
             if (loginInput.equals(BancoDeDados.getLogin()) && senhaInput.equals(BancoDeDados.getSenha())) {
                 System.out.println("Login realizado com sucesso!");
                 menuOrganizador(); // Redireciona para o menu do organizador linha 77!
@@ -48,35 +57,37 @@ public class Sistema {
             }
         }
     }
+    
 
     // Verificando login participante!
     public static void loginParticipante() {
         System.out.println("Email: ");
         String emailInput = scanner.nextLine();
-    
+
         System.out.println("Senha: ");
         String senhaInput = scanner.nextLine();
-    
+
         boolean participanteEncontrado = false;
-    
+
         // Buscando o participante na lista de participantes
         for (Participante p : BancoDeDados.getParticipantes()) {
             if (p.getEmailParticipante().equalsIgnoreCase(emailInput) && p.getSenhaParticipante().equals(senhaInput)) {
                 System.out.println("Login realizado com sucesso!");
-                menuParticipante();  // Redireciona para o menu do participante linha 99!
+                Sessao sessao = new Sessao(p);
+                menuParticipante(sessao, scanner); // Redireciona para o menu do participante linha 99!
                 participanteEncontrado = true;
                 break;
             }
         }
-    
+
         if (!participanteEncontrado) {
             System.out.println("Email e/ou senha incorretos! Tente novamente.");
         }
     }
-    
+
     // Criando o menu do organizador!
-    public static void menuOrganizador(){
-        while (true){
+    public static void menuOrganizador() {
+        while (true) {
             System.out.println("\n--- Menu organizador! ---");
             System.out.println("1. Dados dos eventos");
             System.out.println("2. Dados dos participantes");
@@ -90,15 +101,17 @@ public class Sistema {
                 case 1 -> menuEvento(); // Linha 122
                 case 2 -> menuParticipanteOrg(); // Método criado! Linha 154
                 case 3 -> menuCantor(); // Método criado! Linha 181
-                case 4 -> {return;}
+                case 4 -> {
+                    return;
+                }
                 default -> System.out.println("Opção inválida!");
             }
         }
     }
-    
+
     // Criando o menu do participante!
-    public static void menuParticipante(){
-        while (true){
+    public static void menuParticipante(Sessao sessao, Scanner scanner) {
+        while (true) {
             System.out.println("\n--- Menu do participante! ---");
             System.out.println("1. Alterar meus dados");
             System.out.println("2. Listar eventos");
@@ -109,20 +122,22 @@ public class Sistema {
             scanner.nextLine(); // Limpar buffer!
 
             switch (opcao) {
-                //case 1 -> alterarDados();
+                case 1 -> sessao.alterarDados(scanner); // Método na classe
                 case 2 -> listarEvento(); // Método criado! Linha 204
-                //case 3 -> inscricaoEvento();
-                //case 4 -> cancelarInscricao();
-                case 5 -> {return;}
+                // case 3 -> inscricaoEvento();
+                // case 4 -> cancelarInscricao();
+                case 5 -> {
+                    return;
+                }
                 default -> System.out.println("Opção inválida!");
             }
 
         }
     }
-    
+
     // Criando o menu do evento (organizador)!
-    public static void menuEvento(){
-        while (true){
+    public static void menuEvento() {
+        while (true) {
             System.out.println("\n--- Menu evento! ---");
             System.out.println("1. Criar evento");
             System.out.println("2. Listar eventos");
@@ -141,20 +156,22 @@ public class Sistema {
                 case 1 -> criarEvento(); // Linha 270.
                 case 2 -> listarEvento(); // Linha 206.
                 case 3 -> editarEvento(); // Linha 315
-                //case 4 -> cancelarEvento();
-                //case 5 -> adicionarCantor();
-                //case 6 -> adicionarParticipante();
-                //case 7 -> removerCantor();
-                //case 8 -> excluirEvento();
-                case 9 -> {return;}
+                case 4 -> cancelarEvento(); // Linha 625
+                case 5 -> adicionarCantorEvento(); // Linha
+                // case 6 -> adicionarParticipante();
+                // case 7 -> removerCantor();
+                // case 8 -> excluirEvento();
+                case 9 -> {
+                    return;
+                }
                 default -> System.out.println("Opção inválida!");
             }
         }
     }
 
     // Criando o menu do participante (Organizador)!
-    public static void menuParticipanteOrg(){
-        while (true){
+    public static void menuParticipanteOrg() {
+        while (true) {
             System.out.println("\n--- Menu do participante (organizador)! ---");
             System.out.println("1. Cadastrar participante");
             System.out.println("2. Listar participantes");
@@ -170,17 +187,19 @@ public class Sistema {
                 case 1 -> criarParticipante(); // Linha 248
                 case 2 -> listarParticipante(); // Linha 234
                 case 3 -> editarParticipante(); // Linha 413
-                //case 4 -> adicionarParticipanteEvento();
-                //case 5 -> excluirParticipante();
-                case 6 -> {return;}
+                // case 4 -> adicionarParticipanteEvento();
+                // case 5 -> excluirParticipante();
+                case 6 -> {
+                    return;
+                }
                 default -> System.out.println("Opção inválida!");
             }
         }
     }
-    
+
     // Criando o menu do cantor (organizador)!
-    public static void menuCantor(){
-        while (true){
+    public static void menuCantor() {
+        while (true) {
             System.out.println("\n--- Menu do cantor! ---");
             System.out.println("1. Cadastrar cantor");
             System.out.println("2. Listar cantores");
@@ -196,18 +215,20 @@ public class Sistema {
                 case 1 -> criarCantor(); // Linha 296
                 case 2 -> listarCantor(); // Linha 220
                 case 3 -> editarCantor(); // Linha 503
-                //case 4 -> adicionarCantorEvento();
-                //case 5 -> excluirCantor();
-                case 6 -> {return;}
+                // case 4 -> adicionarCantorEvento();
+                // case 5 -> excluirCantor();
+                case 6 -> {
+                    return;
+                }
                 default -> System.out.println("Opção inválida!");
             }
         }
     }
-    
+
     // Método para listar os eventos!
     public static void listarEvento() {
         System.out.println("\n----- Lista de eventos: -----");
-    
+
         if (BancoDeDados.getEventos().isEmpty()) {
             System.out.println("Nenhum evento cadastrado.");
         } else {
@@ -219,13 +240,13 @@ public class Sistema {
     }
 
     // Método para listar cantores!
-    public static void listarCantor(){
+    public static void listarCantor() {
         System.out.println("\n----- Lista de cantores: -----");
 
-        if (BancoDeDados.getCantores().isEmpty()){
+        if (BancoDeDados.getCantores().isEmpty()) {
             System.out.println("Nenhum cantor cadastrado.");
-        } else{
-            for(int i = 0; i < BancoDeDados.getCantores().size(); i++){
+        } else {
+            for (int i = 0; i < BancoDeDados.getCantores().size(); i++) {
                 Cantor cantor = BancoDeDados.getCantores().get(i);
                 System.out.println(cantor);
             }
@@ -233,13 +254,13 @@ public class Sistema {
     }
 
     // Metodo para listar participantes!
-    public static void listarParticipante(){
+    public static void listarParticipante() {
         System.out.println("\n----- Lista de participantes: -----");
 
-        if (BancoDeDados.getParticipantes().isEmpty()){
+        if (BancoDeDados.getParticipantes().isEmpty()) {
             System.out.println("Nenhum participante cadastrado.");
-        } else{
-            for (int i = 0; i < BancoDeDados.getParticipantes().size(); i++){
+        } else {
+            for (int i = 0; i < BancoDeDados.getParticipantes().size(); i++) {
                 Participante participante = BancoDeDados.getParticipantes().get(i);
                 System.out.println(participante);
             }
@@ -251,19 +272,19 @@ public class Sistema {
         System.out.println("=== Cadastro de Participante ===");
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
-    
+
         System.out.print("Email: ");
         String email = scanner.nextLine();
-    
+
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine();
-    
+
         System.out.print("Idade: ");
         int idade = Integer.parseInt(scanner.nextLine());
-    
+
         System.out.print("Senha: ");
         String senha = scanner.nextLine();
-    
+
         Participante novoParticipante = new Participante(nome, email, telefone, idade, senha);
         BancoDeDados.adicionarParticipante(novoParticipante);
     }
@@ -271,23 +292,23 @@ public class Sistema {
     // Método para cadastrar evento!
     public static void criarEvento() {
         System.out.println("\n--- Cadastro de Evento ---");
-    
+
         System.out.print("Nome do evento: ");
         String nome = scanner.nextLine();
-    
+
         System.out.print("Descrição do evento: ");
         String descricao = scanner.nextLine();
-    
+
         System.out.print("Local do evento: ");
         String local = scanner.nextLine();
-    
+
         System.out.print("Data do evento (ex: 10/06/2025): ");
         String data = scanner.nextLine();
-    
+
         System.out.print("Capacidade máxima de participantes: ");
         int capacidade = scanner.nextInt();
         scanner.nextLine(); // Limpa buffer
-    
+
         Evento novoEvento = new Evento(nome, descricao, local, data, capacidade);
         BancoDeDados.adicionarEvento(novoEvento);
         System.out.println("✅ Evento cadastrado com sucesso!");
@@ -306,7 +327,7 @@ public class Sistema {
 
         System.out.println("Digite a idade do cantor:");
         int idadeCantor = scanner.nextInt();
-        scanner.nextLine();  // Limpar buffer!
+        scanner.nextLine(); // Limpar buffer!
 
         Cantor novoCantor = new Cantor(nomeCantor, emailCantor, telefoneCantor, idadeCantor);
         BancoDeDados.adicionarCantor(novoCantor);
@@ -320,8 +341,8 @@ public class Sistema {
             System.out.println("Nenhum evento cadastrado.");
         } else {
             for (int i = 0; i < BancoDeDados.getEventos().size(); i++) {
-                Evento evento = BancoDeDados.getEventos().get(i);  // Pega o objeto Evento inteiro
-                System.out.println(evento.getNomeEvento());  // Imprime apenas o nome do evento
+                Evento evento = BancoDeDados.getEventos().get(i); // Pega o objeto Evento inteiro
+                System.out.println(evento.getNomeEvento()); // Imprime apenas o nome do evento
             }
         }
 
@@ -419,13 +440,13 @@ public class Sistema {
         } else {
             for (int i = 0; i < BancoDeDados.getParticipantes().size(); i++) {
                 Participante participante = BancoDeDados.getParticipantes().get(i);
-                System.out.println(participante.getEmailParticipante());  // Imprime apenas o e-mail do participante
+                System.out.println(participante.getEmailParticipante()); // Imprime apenas o e-mail do participante
             }
         }
 
         System.out.println("Digite o e-mail do participante que deseja editar: ");
         String email = scanner.nextLine();
-        
+
         // Procurar participante pelo e-mail
         Participante participante = null;
         for (Participante p : BancoDeDados.getParticipantes()) {
@@ -567,6 +588,76 @@ public class Sistema {
                 }
             }
         }
+    }
+
+    // Método para vincular o cantor ao evento em que ele irá se apresentar. Linha
+    // 145
+    public static void adicionarCantorEvento() {
+        System.out.println("----- Lista de Cantores Cadastrados: -----");
+
+        if (BancoDeDados.getCantores().isEmpty()) {
+            System.out.println("Nenhum cantor cadastrado.");
+            return;
+        }
+
+        for (Cantor cantor : BancoDeDados.getCantores()) {
+            System.out.println(cantor.getNomeCantor());
+        }
+
+        System.out.print("Digite o nome do cantor que deseja adicionar ao evento: ");
+        String nome = scanner.nextLine();
+
+        Cantor cantorEscolhido = null;
+        for (Cantor c : BancoDeDados.getCantores()) {
+            if (c.getNomeCantor().equalsIgnoreCase(nome)) {
+                cantorEscolhido = c;
+                break;
+            }
+        }
+
+        if (cantorEscolhido == null) {
+            System.out.println("Cantor não encontrado com o nome: " + nome);
+            return;
+        }
+
+        // Verifica se o cantor já foi adicionado
+
+    }
+
+    // Método para cancelar o evento!
+    public static void cancelarEvento(){
+        System.out.println("\n----- Lista de eventos: -----");
+
+        if (BancoDeDados.getEventos().isEmpty()) {
+            System.out.println("Nenhum evento cadastrado.");
+        } else {
+            for (int i = 0; i < BancoDeDados.getEventos().size(); i++) {
+                Evento evento = BancoDeDados.getEventos().get(i); // Pega o objeto Evento inteiro
+                System.out.println(evento.getNomeEvento()); // Imprime apenas o nome do evento
+            }
+        }
+
+        // Solicitar o nome do evento para identificar qual evento será cancelado
+        System.out.println("Digite o nome do evento que deseja cancelar:");
+        String nomeEvento = scanner.nextLine();
+
+        // Procurar o evento na lista de eventos
+        Evento evento = null;
+        for (Evento e : BancoDeDados.getEventos()) {
+            if (e.getNomeEvento().equalsIgnoreCase(nomeEvento)) {
+                evento = e;
+                break;
+            }
+        }
+
+        // Verificar se o evento foi encontrado
+        if (evento == null) {
+            System.out.println("Evento não encontrado!");
+            return;
+        }else{
+            evento.desativarEvento();
+        }
+
     }
 
 }
